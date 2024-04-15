@@ -3,7 +3,7 @@ from enum import Enum, auto
 
 from connection import Connection
 
-class ConnectionState(Enum):
+class ListenerState(Enum):
     LISTENING = auto()
     CLOSED = auto()
     ERROR = auto()
