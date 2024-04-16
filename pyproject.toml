@@ -8,6 +8,10 @@ description = "Tcp / http / ws server and client"
 dependencies = []
 requires-python = ">=3.12"
 
+[project.optional-dependencies]
+test = ["termcolor"]
+dev = ["termcolor", "ruff", "wheel"]
+
 [tool.ruff]
 line-length = 110
 ignore = [
