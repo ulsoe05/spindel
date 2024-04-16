@@ -1,7 +1,7 @@
 from typing import Protocol
 from enum import Enum, auto
 
-from connection import Connection
+from .connection import Connection
 
 class ListenerState(Enum):
     LISTENING = auto()
