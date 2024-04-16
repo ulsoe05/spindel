@@ -5,8 +5,7 @@ from enum import Enum, auto
 class ConnectionState(Enum):
     PENDING_CONNECTION = auto()
     CONNECTED = auto()
-    OPEN = auto()
-    CLOSED = auto()
+    DISCONNECTED = auto()
     ERROR = auto()
 
 class Connection(Protocol):
