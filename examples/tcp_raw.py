@@ -4,7 +4,6 @@ from spindel import TcpConnection, TcpListener, ListenerState
 def example():
     from test_log import make_logger
     from threading import Thread
-    import time
 
     serverlog = make_logger(name="server", color="yellow")
     clientlog = make_logger(name="client", color="green")
@@ -31,7 +30,6 @@ def example():
 
     server_thread = Thread(target=server_func)
     server_thread.start()
-    time.sleep(1.0)
     client_thread = Thread(target=client_func)
     client_thread.start()
     server_thread.join()

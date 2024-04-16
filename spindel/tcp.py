@@ -59,6 +59,15 @@ class TcpListener:
 
 class TcpConnection:
     def __init__(self, host: str, port: int, log: Logger | None = None):
+        """Create a new TCP connection to a remote host.
+        Args:
+            host (str): Either an IP address or a hostname.
+            port (int): The port number to connect to.
+            log (Logger | None, optional): A logger object. Defaults to None.
+        
+        Raises:
+            ConnectionRefusedError: If the connection is refused by the remote host.
+        """
         self._host = host
         self._port = port
         self.log = getLogger() if log is None else log
@@ -70,8 +79,21 @@ class TcpConnection:
     def close(self):
         self._socket.close()
 
-    def send_binary(self, data):
-        self._socket.sendall(data)
+    def send_binary(self, data) -> bool:
+        try:
+            self._socket.sendall(data)
+       
+        except BrokenPipeError as e:
+            self.log.error(f"Connection to {self._host}:{self._port} was closed: {e}")
+            self._state = ConnectionState.DISCONNECTED
+            return False
+        
+        except ConnectionError as e: # Note: BrokenPipeError is a subclass of ConnectionError
+            self.log.error(f"Failed to send data: {e}")
+            self._state = ConnectionState.ERROR
+            return False
+        
+        return True
 
     def recv_binary(self, size) -> bytes:
         return self._socket.recv(size)
